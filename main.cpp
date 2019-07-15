@@ -42,9 +42,9 @@ int main(int argc, char** argv)
     cout << "For more information about libtorrent, please visit https://github.com/arvidn/libtorrent" << endl;
    std::string cwd = qcutil::Path::getApplicationDirPath();
     cout << "Current work directory: " << cwd << endl;
-    cout << "Defualt configure file: " << cwd + "file_seeder.json" << endl;
-    std::string work_dir = cwd + "seed/";
-    cout << "Default seeding file folder: " << work_dir << endl;
+	cout << "Defualt configure file: " << "/usr/local/file_seeder/file_seeder.json" << endl;
+	std::string data_dir = "/usr/local/file_seeder/seed";
+	cout << "Default seeding file folder: " << data_dir << endl;
     // load configure.
     if(!file_seeder::config::getInstance().load())
     {
@@ -64,7 +64,7 @@ int main(int argc, char** argv)
         cout << "with torrent file [" << i.torrent_file << "]" << endl;
     }
     
-    file_seeder::seed_executor se(work_dir, tasks);
+	file_seeder::seed_executor se(data_dir, tasks);
     se.start();
     while(!quit_flag)
     {

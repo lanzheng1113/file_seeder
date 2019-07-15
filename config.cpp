@@ -14,7 +14,7 @@ namespace file_seeder {
     
 bool config::load() 
 {
-            std::string cfg_path = qcutil::Path::getApplicationDirPath() + "file_seeder.json";
+	std::string cfg_path = "/usr/local/file_seeder/file_seeder.json";
             if (!qcutil::File::exists(cfg_path)) {
                 SLOG(error) << "the configure file: [" << cfg_path << "] does not exist." << std::endl;
                 return false;

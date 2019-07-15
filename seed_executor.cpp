@@ -16,9 +16,9 @@ using std::endl;
 
 namespace file_seeder {
 
-    seed_executor::seed_executor(const std::string& work_dir,
+	seed_executor::seed_executor(const std::string& data_dir,
             const std::vector<file_seeder::config::seed_tasks_in_conf>& tasks) {
-        m_work_dir = work_dir;
+	            m_data_dir = data_dir;
         m_tasks_conf = tasks;
     }
 
@@ -34,12 +34,12 @@ namespace file_seeder {
         m_seed_client = boost::make_shared<file_seeder::torrent_client>();
         m_seed_client->start();
         for (auto i : m_tasks_conf) {
-            std::string torrent_file_full_path = m_work_dir + i.torrent_file;
+	        std::string torrent_file_full_path = m_data_dir + i.torrent_file;
             if (!qcutil::File::exists(torrent_file_full_path)) {
                 SLOG(error) << "Task file " << torrent_file_full_path << " not exist, skip it." << endl;
                 continue;
             } else {
-                DWORD task_id = m_seed_client->add_task(torrent_file_full_path, m_work_dir);
+	            DWORD task_id = m_seed_client->add_task(torrent_file_full_path, m_data_dir);
                 if (task_id == 0) {
                     SLOG(error) << "failed to add task " << torrent_file_full_path << endl;
                     continue;
