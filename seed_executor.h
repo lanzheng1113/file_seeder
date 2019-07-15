@@ -26,7 +26,7 @@ namespace file_seeder {
 
     class seed_executor {
     public:
-        seed_executor(const std::string& data_dir, const std::vector<config::seed_tasks_in_conf>& tasks);
+        seed_executor(const std::string& work_dir, const std::vector<config::seed_tasks_in_conf>& tasks);
         ~seed_executor();
     public:
         bool start();
@@ -36,7 +36,7 @@ namespace file_seeder {
     private:
         boost::shared_ptr<file_seeder::torrent_client> m_seed_client;
         boost::shared_ptr<file_seeder::easy_timer> m_query_timer;
-        std::string m_data_dir;
+        std::string m_work_dir;
         std::vector<config::seed_tasks_in_conf> m_tasks_conf;
         std::vector<DWORD> m_task_id_array;
     };
