@@ -27,11 +27,16 @@
 #include "seed_executor.h"
 #include "logger.h"
 #include "boost/thread.hpp"
+#include <signal.h>
 
 using std::cout;
 using std::endl;
 
-bool quit_flag = false;
+volatile sig_atomic_t quit_flag = 0;
+static void my_handler(int sig) 
+{
+	quit_flag = 1;   // set flag
+}
 
 int main(int argc, char** argv) 
 {
@@ -64,12 +69,15 @@ int main(int argc, char** argv)
         cout << "with torrent file [" << i.torrent_file << "]" << endl;
     }
     
+	signal(SIGINT, my_handler);
+	
 	file_seeder::seed_executor se(data_dir, tasks);
     se.start();
     while(!quit_flag)
     {
         boost::this_thread::sleep(boost::posix_time::seconds(1));
     }
+	cout << "Got the singal to quit, please wait ..." << endl;
     se.stop();
     return 0;
 }
