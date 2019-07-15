@@ -63,6 +63,7 @@ namespace file_seeder {
             return false;
         m_last_post_status_update = lt::clock_type::now();
         m_torrent_worker = boost::make_shared<sync_caller>();
+	    m_torrent_worker->start();
         sync_caller::sync_call_type t = boost::bind(&torrent_client::create_session, this);
         m_torrent_worker->do_call(t);
         //start a timer thread to retrive the alert.
