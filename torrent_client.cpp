@@ -48,6 +48,8 @@ namespace file_seeder {
         pack.set_bool(settings_pack::allow_multiple_connections_per_ip, true);
         pack.set_int(settings_pack::network_threads, 8);
         pack.set_int(settings_pack::aio_threads, 4);
+	    // the disk cache performs better with the pool allocator
+	    pack.set_bool(settings_pack::use_disk_cache_pool, true);
         return pack;
     }
 

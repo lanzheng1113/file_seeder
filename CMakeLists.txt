@@ -18,7 +18,7 @@ add_executable(file_seeder config.cpp logger.cpp main.cpp seed_executor.cpp torr
 #include libwztk
 include_directories(/home/duocore/NetBeansProjects/LinuxCppABC/wztk/WZTKUtil/include)
 
-list(APPEND CMAKE_LIBRARY_PATH "/home/duocore/NetBeansProjects/LinuxCppABC/wztk/dist/Debug/GNU-Linux")
+list(APPEND CMAKE_LIBRARY_PATH "/home/duocore/NetBeansProjects/LinuxCppABC/wztk/dist/Release/GNU-Linux")
 find_library(LIBWZTK_PATH wztk)
 if(NOT LIBWZTK_PATH)
 message(FATAL_ERROR "libwztk not found")

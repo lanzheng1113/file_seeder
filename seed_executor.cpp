@@ -34,7 +34,7 @@ namespace file_seeder {
         m_seed_client = boost::make_shared<file_seeder::torrent_client>();
         m_seed_client->start();
         for (auto i : m_tasks_conf) {
-	        std::string torrent_file_full_path = m_data_dir + i.torrent_file;
+	        std::string torrent_file_full_path = m_data_dir + "/" + i.torrent_file;
             if (!qcutil::File::exists(torrent_file_full_path)) {
                 SLOG(error) << "Task file " << torrent_file_full_path << " not exist, skip it." << endl;
                 continue;
@@ -98,7 +98,7 @@ namespace file_seeder {
             return;
         lt::session_status sess_stat;
         if (m_seed_client->query_session_status(sess_stat)) {
-            SLOG(info) << "Session down: " << sess_stat.payload_download_rate << ", up " << sess_stat.payload_upload_rate;
+	        SLOG(info) << "[Session] torrent count: " << sess_stat.num_torrents << ",down: " << sess_stat.payload_download_rate << ", up " << sess_stat.payload_upload_rate << endl;
         } else {
             SLOG(error) << "Failed to query the session status." << endl;
         }
@@ -106,7 +106,7 @@ namespace file_seeder {
         for (auto task_id : m_task_id_array) {
             lt::torrent_status ts;
             if (m_seed_client->query_torrent_status(task_id, ts)) {
-                SLOG(info) << "s:" << torrent_status_to_string(ts.state) << ",d:" << ts.download_payload_rate / 1000 << "k,u:" << ts.upload_payload_rate / 1000 << "k,ns:" << ts.num_seeds << ",np:" << ts.num_peers << endl;
+	            SLOG(info) << "task[" << task_id << "] status:" << torrent_status_to_string(ts.state) << ",percent:" << (int)(ts.progress * 100) << "%,down:" << ts.download_payload_rate / 1000 << "k,up:" << ts.upload_payload_rate / 1000 << "k,num_seed:" << ts.num_seeds << ",num_peer:" << ts.num_peers << endl;
             } else {
                 SLOG(error) << "Task " << task_id << " Failed to query the status." << endl;
             }
